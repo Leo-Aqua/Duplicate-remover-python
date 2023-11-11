@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm
 import time
 
-image_folder = "./test"
+folder = "ENTER FOLDER NAME HERE"
 
 
 t0 = time.time()
@@ -34,10 +34,10 @@ hash_list = []
 file_set = set()  # Keep track of unique files
 file_counter = 0
 
-for filepath in walkdir(image_folder):
+for filepath in walkdir(folder):
     file_counter += 1
 
-for file in tqdm(walkdir(image_folder), desc="Calculating file hashes", total=file_counter, unit=" files"):
+for file in tqdm(walkdir(folder), desc="Calculating file hashes", total=file_counter, unit=" files"):
     file_hash = hash_file(file)
     hash_list.append(file_hash)
 
@@ -47,7 +47,7 @@ for file_hash in tqdm(set(hash_list), desc="Identifying duplicates", total=len(s
     count = count_string_occurrences(hash_list, file_hash)
     
     if count > 1:
-        duplicates = [file for file, hash_value in zip(walkdir(image_folder), hash_list) if hash_value == file_hash]
+        duplicates = [file for file, hash_value in zip(walkdir(folder), hash_list) if hash_value == file_hash]
         duplicates_to_delete.extend(duplicates[1:])
 
 # Delete duplicate files
